@@ -1,4 +1,4 @@
 # drone_control
 
-##Prerequisites
+## Prerequisites
 install dependencies using pip install -r "requirements.txt"
