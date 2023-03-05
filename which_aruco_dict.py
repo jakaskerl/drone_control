@@ -5,7 +5,7 @@ import imutils
 import cv2
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
-ap.add_argument("-i", "--image", required=True,
+ap.add_argument("-i", "--image", required=False,
 	help="path to input image containing ArUCo tag")
 args = vars(ap.parse_args())
 
@@ -33,19 +33,20 @@ ARUCO_DICT = {
 	"DICT_APRILTAG_36h11": cv2.aruco.DICT_APRILTAG_36h11
 }
 
-print("[INFO] loading image...")
-image = cv2.imread(args["image"])
-image = imutils.resize(image, width=600)
-# loop over the types of ArUco dictionaries
-for (arucoName, arucoDict) in ARUCO_DICT.items():
-	# load the ArUCo dictionary, grab the ArUCo parameters, and
-	# attempt to detect the markers for the current dictionary
-	arucoDict = cv2.aruco.Dictionary_get(arucoDict)
-	arucoParams = cv2.aruco.DetectorParameters_create()
-	(corners, ids, rejected) = cv2.aruco.detectMarkers(
-		image, arucoDict, parameters=arucoParams)
-	# if at least one ArUco marker was detected display the ArUco
-	# name to our terminal
-	if len(corners) > 0:
-		print("[INFO] detected {} markers for '{}'".format(
-			len(corners), arucoName))
+if __name__ == "__main__":
+	print("[INFO] loading image...")
+	image = cv2.imread(args["image"])
+	image = imutils.resize(image, width=600)
+	# loop over the types of ArUco dictionaries
+	for (arucoName, arucoDict) in ARUCO_DICT.items():
+		# load the ArUCo dictionary, grab the ArUCo parameters, and
+		# attempt to detect the markers for the current dictionary
+		arucoDict = cv2.aruco.Dictionary_get(arucoDict)
+		arucoParams = cv2.aruco.DetectorParameters_create()
+		(corners, ids, rejected) = cv2.aruco.detectMarkers(
+			image, arucoDict, parameters=arucoParams)
+		# if at least one ArUco marker was detected display the ArUco
+		# name to our terminal
+		if len(corners) > 0:
+			print("[INFO] detected {} markers for '{}'".format(
+				len(corners), arucoName))
